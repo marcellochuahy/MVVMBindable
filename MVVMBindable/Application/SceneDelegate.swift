@@ -7,6 +7,29 @@
 
 import UIKit
 
+/*
+ 
+ 1. Delete the Main.storyboard file from the project. Click Move to Trash.
+ 
+ 2. Remove Storyboard Name from info.plist.
+ 
+    --> Info.plist:
+        Information Property List
+        > Scene Configuration
+        > Application Session Role
+        > Item 0 (Default Configuration)
+        > Storyboard Name
+ 
+ 3. Remove "Main" from "UIKit Main Storyboard File Base Name"
+ 
+    --> Project Navigator:
+        TARGETS (Your Target)
+        > Build Settings
+        > Filter: "UIKit Main Storyboard File Base Name"
+        > UIKit Main Storyboard File Base Name: delete "Main"
+
+ */
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -16,7 +39,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        let viewModel = ViewModel()
+
+        let viewController = ViewController(viewModel: viewModel)
+        
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = viewController
+        window?.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -49,4 +82,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
 }
-
